@@ -1,0 +1,36 @@
+
+<div class="card-body px-0 pb-2">
+    <div class="table-responsive">
+      <table class="table align-items-center mb-0">
+        <thead>
+          <tr>    
+            <!-- // заголовки -->
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completed</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Priority</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          <!-- перебор значений в таблицу -->
+          <tr *ngFor="let task of tasks; let i =index" [class.completed]="task.completed">
+            <td>{{i+1}} </td>
+            <td>{{task.title}} </td>
+            <td>{{task.category ? task.category.title: 'Without category'}} </td>
+            <td>{{task.priority ? task.priority.title: 'Without priority'}} </td>
+            <td>{{task.date ? (task.date | date) : 'Without date'}} </td>
+            <td>
+              <input type="checkbox" [checked]="task.completed" (change)="toggleCompleted(task)" >
+            </td>
+            <!-- <td>{{task.completed}} </td> -->
+
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
