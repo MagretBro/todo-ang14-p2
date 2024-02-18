@@ -1,10 +1,108 @@
+<div class="card">
+  <div class="card-header card-header-warning">
+      <h4 class="card-title">Список задач</h4>
+  </div>
+  <div class="card-body table-responsive">
 
-<div class="card-body px-0 pb-2">
+      <table [dataSource]="dataSource" mat-table>
+
+          <!--  цвет приоритета  -->
+          <ng-container matColumnDef="color">
+              <th *matHeaderCellDef mat-header-cell></th>
+              <td *matCellDef="let task" [style.background-color]="getPriorityColor(task)" class="col-color"
+                  mat-cell></td>
+          </ng-container>
+
+
+          <!-- нумерация-->
+          <ng-container matColumnDef="id">
+              <th *matHeaderCellDef mat-header-cell></th>
+              <td *matCellDef="let index = index;" class="col-id" mat-cell>
+
+                  {{index + 1}}
+
+              </td>
+          </ng-container>
+
+
+          <!-- название задачи-->
+          <ng-container matColumnDef="title">
+              <th *matHeaderCellDef mat-header-cell> Название</th>
+              <td *matCellDef="let task" [class.completed]="task.completed" class="col-title" mat-cell>
+
+                  {{task.title}}
+
+              </td>
+          </ng-container>
+
+          <!--дата выполнения-->
+          <ng-container matColumnDef="date">
+              <th *matHeaderCellDef mat-header-cell> Срок</th>
+              <td *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nodate': task.date == null}"
+                  class="col-date"
+                  mat-cell>
+
+                  {{task.date | date: "medium"}}
+
+              </td>
+          </ng-container>
+
+          <!--приоритет-->
+          <ng-container matColumnDef="priority">
+              <th *matHeaderCellDef mat-header-cell> Приоритет</th>
+              <td *matCellDef="let task" class="col-priority"
+                  [ngClass]="{'completed': task.completed, 'nopriority': task.priority == null}"
+                  mat-cell
+              >
+
+                  {{task.priority ? task.priority.title : "Без приоритета"}}
+
+
+              </td>
+          </ng-container>
+
+          <!--категория-->
+          <ng-container matColumnDef="category">
+              <th *matHeaderCellDef mat-header-cell> Категория</th>
+              <td *matCellDef="let task" class="col-category"
+                  [ngClass]="{'completed': task.completed, 'nocategory': task.category == null, 'link': !task.completed && task.category}"
+                  mat-cell
+              >
+
+                  {{task.category ? task.category.title : "Без категории"}}
+
+              </td>
+          </ng-container>
+
+
+          <!--  заголовок таблицы-->
+          <tr *matHeaderRowDef="displayedColumns; " mat-header-row></tr>
+
+          <!--  строки таблицы - набор строк из тегов td (порядок указывается в переменной displayedColumns) -->
+          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+      </table>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="card-body px-0 pb-2">
     <div class="table-responsive">
       <table class="table align-items-center mb-0">
         <thead>
           <tr>    
-            <!-- // заголовки -->
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completed</th>
@@ -16,7 +114,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- перебор значений в таблицу -->
           <tr *ngFor="let task of tasks; let i =index" [class.completed]="task.completed">
             <td>{{i+1}} </td>
             <td>{{task.title}} </td>
@@ -26,11 +123,10 @@
             <td>
               <input type="checkbox" [checked]="task.completed" (change)="toggleCompleted(task)" >
             </td>
-            <!-- <td>{{task.completed}} </td> -->
 
 
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->

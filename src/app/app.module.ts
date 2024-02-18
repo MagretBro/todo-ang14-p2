@@ -5,7 +5,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoriesComponent } from './views/categories/categories.component';
 import { TasksComponent } from './views/tasks/tasks.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -18,7 +21,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
