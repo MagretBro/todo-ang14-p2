@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataHandlerService } from 'src/app/service/data-handler.service';
 import { Task } from 'src/app/model/Task';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-tasks',
@@ -15,6 +18,14 @@ export class TasksComponent implements OnInit {
     public displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
     //public dataSource: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
     public dataSource: MatTableDataSource<Task> = new MatTableDataSource<Task>();
+
+  // table component
+  // @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
+  // @ViewChild(MatSort, {static: false}) private sort: MatSort;
+
+  @ViewChild(MatPaginator, {static: false}) private paginator!: MatPaginator; // Инициализатор для paginator
+  @ViewChild(MatSort, {static: false}) private sort!: MatSort; // Инициализатор для sort
+
 
     tasks: Task[]=[];
 
@@ -31,6 +42,10 @@ export class TasksComponent implements OnInit {
         this.refreshTable();
     }
 
+     // в этом методе уже все проинциализировано, поэтому можно присваивать объекты (иначе может быть ошибка undefined)
+    ngAfterViewInit(): void {
+      this.addTableObjects();
+    }
 
     toggleTaskCompleted(task: Task) {
         task.completed = !task.completed;
@@ -56,23 +71,34 @@ export class TasksComponent implements OnInit {
     private refreshTable() {
 
         this.dataSource.data = this.tasks; // обновить источник данных (т.к. данные массива tasks обновились)
+        this.addTableObjects();
 
+        this.dataSource.sortingDataAccessor = (task, colName) => {
+          switch (colName) {
+            case 'priority': {
+              return task.priority ? task.priority.id.toString() : ''; // Преобразуем в строку
+          }
+          case 'category': {
+              return task.category ? task.category.title : ''; // Возвращаем строку или пустую строку
+          }
+          case 'date': {
+              return task.date ? task.date.toString() : ''; // Преобразуем в строку
+          }
+          case 'title': {
+              return task.title;
+          }
+          default: {
+              return ''; // Обработка для всех остальных случаев
+          }
+          }
+        }
 
+    }
+
+    private addTableObjects() {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     }
 
 }
 
-
-
-//   tasks: Task[]=[];
-//   constructor(private dataHandler: DataHandlerService) { }
-
-//   ngOnInit(): void {
-//     this.dataHandler.taskSubject.subscribe(tasks=>this.tasks=tasks); 
-//   }
-
-//   toggleCompleted(task: Task): void {
-//     task.completed = !task.completed;
-//   }
-
-// }
