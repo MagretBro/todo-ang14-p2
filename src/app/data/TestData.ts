@@ -75,6 +75,12 @@ export class TestData {
         completed: false,
         category: TestData.categories[3],
         date: new Date('2024-12-11')
+    } ,
+    { 
+        id: 7,
+        title: 'TodoSHA++',
+        priority: TestData.priorities[1],
+        completed: false
     } 
     ];
 }

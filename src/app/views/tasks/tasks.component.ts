@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DataHandlerService } from 'src/app/service/data-handler.service';
 import { Task } from 'src/app/model/Task';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, AfterViewInit {
 
 
     // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
